@@ -1,4 +1,3 @@
-// worker/index.ts
 export default {
   async fetch(request: Request) {
     try {
@@ -12,7 +11,6 @@ export default {
         });
       }
 
-      // RapidAPI call
       const res = await fetch(
         `https://terabox-downloader-online-viewer-player-api.p.rapidapi.com/rapidapi?url=${encodeURIComponent(
           targetUrl
@@ -20,30 +18,26 @@ export default {
         {
           headers: {
             "x-rapidapi-host": "terabox-downloader-online-viewer-player-api.p.rapidapi.com",
-            "x-rapidapi-key": "83791e6b73mshd6a661db418b677p1ab880jsn7b59ca3ba66f", // <-- Yahan apni key daal
+            "x-rapidapi-key": "<YOUR_RAPIDAPI_KEY>", // yahan apna RapidAPI key daal
           },
         }
       );
 
       const data = await res.json();
 
-      // Frontend ke liye video link extract
-      const videoUrl =
-        data?.video || data?.files?.[0]?.link || data?.download?.[0]?.url || null;
-
-      if (!videoUrl) {
-        return new Response(JSON.stringify({ error: "Video not found" }), {
+      // Ensure response has a video key
+      if (!data || !data.video) {
+        return new Response(JSON.stringify({ error: "No playable video found" }), {
           status: 404,
           headers: { "Content-Type": "application/json" },
         });
       }
 
-      // Frontend ko JSON me "video" property ke sath return karo
-      return new Response(JSON.stringify({ video: videoUrl }), {
+      return new Response(JSON.stringify({ video: data.video }), {
         headers: { "Content-Type": "application/json" },
       });
-    } catch (err: any) {
-      return new Response(JSON.stringify({ error: err.message }), {
+    } catch (err) {
+      return new Response(JSON.stringify({ error: (err as Error).message }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
       });
