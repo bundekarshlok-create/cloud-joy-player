@@ -1,5 +1,4 @@
-{
-  "name": "cloud-joy-backend",
-  "compatibility_date": "2026-01-13",
-  "main": "worker/index.ts"
-}
+name = "cloud-joy-backend"
+main = "worker/index.ts"
+compatibility_date = "2026-01-13"
+type = "javascript"  # ya typescript agar ts use kar rahe ho
