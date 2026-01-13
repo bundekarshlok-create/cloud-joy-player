@@ -7,8 +7,8 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-export default App;
-
+// Tumhara custom UrlInputSection component
+import UrlInputSection from "./components/UrlInputSection";
 
 const queryClient = new QueryClient();
 
@@ -16,12 +16,27 @@ const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        {/* Toast UI */}
         <Toaster />
         <Sonner />
+
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            {/* Home page */}
+            <Route
+              path="/"
+              element={
+                <>
+                  {/* Original Index content */}
+                  <Index />
+
+                  {/* UrlInputSection with backend URL */}
+                  <UrlInputSection backendUrl="https://cloud-joy-backend.bundekarshlok.workers.dev" />
+                </>
+              }
+            />
+
+            {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
