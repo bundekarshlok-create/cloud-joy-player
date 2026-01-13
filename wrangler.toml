@@ -1,0 +1,7 @@
+name = "cloud-joy-player"
+type = "javascript"
+compatibility_date = "2026-01-13"
+pages_build_output_dir = "dist"
+
+[env.production]
+BACKEND_URL = "https://cloud-joy-backend.bundekarshlok.workers.dev"
