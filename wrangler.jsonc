@@ -1,5 +1,5 @@
 {
-  "name": "cloud-joy-backend",
+  "name": "cloud-joy-player",
   "compatibility_date": "2026-01-13",
   "main": "worker/index.ts"
 }
