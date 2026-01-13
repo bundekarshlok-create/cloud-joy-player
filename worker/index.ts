@@ -18,7 +18,7 @@ export default {
         {
           headers: {
             "x-rapidapi-host": "terabox-downloader-online-viewer-player-api.p.rapidapi.com",
-            "x-rapidapi-key": "<YOUR_RAPIDAPI_KEY>", // yahan apna RapidAPI key daal
+            "x-rapidapi-key": "<83791e6b73mshd6a661db418b677p1ab880jsn7b59ca3ba66f>", // yahan apna RapidAPI key daal
           },
         }
       );
