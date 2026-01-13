@@ -4,6 +4,9 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "@/hooks/use-toast";
 
+// Step 1: backend fetch function
+const BACKEND_URL = "https://cloud-joy-backend.bundekarshlok.workers.dev";
+
 const UrlInputSection = () => {
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +25,7 @@ const UrlInputSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!url.trim()) {
       toast({
         title: "Please enter a URL",
@@ -42,15 +45,39 @@ const UrlInputSection = () => {
     }
 
     setIsLoading(true);
-    
-    // Simulate API call - Backend integration needed
-    setTimeout(() => {
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/?url=${encodeURIComponent(url)}`);
+      const data = await res.json();
+
+      if (!data || !data.video) {
+        toast({
+          title: "Video not found",
+          description: "Backend did not return a playable video.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(false);
+
+      // Video URL mil gaya, ab player me use karo
+      // Agar player state me hai, yahan set karo: setVideoUrl(data.video);
+
+      toast({
+        title: "Video Ready",
+        description: "Your Terabox video is ready to play!",
+      });
+    } catch (err) {
+      console.error(err);
       setIsLoading(false);
       toast({
-        title: "Backend Required",
-        description: "Enable Lovable Cloud to fetch and play Terabox videos.",
+        title: "Error",
+        description: "Failed to fetch video from backend.",
+        variant: "destructive",
       });
-    }, 1500);
+    }
   };
 
   return (
