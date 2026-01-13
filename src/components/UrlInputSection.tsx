@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "@/hooks/use-toast";
 
-// Step 1: backend fetch function
 const BACKEND_URL = "https://cloud-joy-backend.bundekarshlok.workers.dev";
 
 const UrlInputSection = () => {
@@ -27,20 +26,12 @@ const UrlInputSection = () => {
     e.preventDefault();
 
     if (!url.trim()) {
-      toast({
-        title: "Please enter a URL",
-        description: "Paste a valid Terabox link to continue.",
-        variant: "destructive",
-      });
+      toast({ title: "Please enter a URL", description: "Paste a valid Terabox link.", variant: "destructive" });
       return;
     }
 
     if (!isValidTeraboxUrl(url)) {
-      toast({
-        title: "Invalid Terabox URL",
-        description: "Please enter a valid Terabox share link.",
-        variant: "destructive",
-      });
+      toast({ title: "Invalid URL", description: "Enter a valid Terabox link.", variant: "destructive" });
       return;
     }
 
@@ -51,32 +42,22 @@ const UrlInputSection = () => {
       const data = await res.json();
 
       if (!data || !data.video) {
-        toast({
-          title: "Video not found",
-          description: "Backend did not return a playable video.",
-          variant: "destructive",
-        });
+        toast({ title: "Video not found", description: "Backend did not return a playable video.", variant: "destructive" });
         setIsLoading(false);
         return;
       }
 
       setIsLoading(false);
 
-      // Video URL mil gaya, ab player me use karo
-      // Agar player state me hai, yahan set karo: setVideoUrl(data.video);
+      toast({ title: "Video Ready", description: "Your Terabox video is ready to play!" });
 
-      toast({
-        title: "Video Ready",
-        description: "Your Terabox video is ready to play!",
-      });
+      // Yahan player me use karo: setVideoUrl(data.video)
+      console.log("Video URL:", data.video);
+
     } catch (err) {
-      console.error(err);
       setIsLoading(false);
-      toast({
-        title: "Error",
-        description: "Failed to fetch video from backend.",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: "Failed to fetch video from backend.", variant: "destructive" });
+      console.error(err);
     }
   };
 
@@ -93,13 +74,7 @@ const UrlInputSection = () => {
             className="pl-12 h-12 bg-secondary/50 border-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-primary"
           />
         </div>
-        <Button 
-          type="submit" 
-          variant="hero" 
-          size="lg"
-          disabled={isLoading}
-          className="h-12 min-w-[140px]"
-        >
+        <Button type="submit" variant="hero" size="lg" disabled={isLoading} className="h-12 min-w-[140px]">
           {isLoading ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
