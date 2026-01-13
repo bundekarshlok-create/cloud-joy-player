@@ -4,7 +4,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "@/hooks/use-toast";
 
-const BACKEND_URL = "https://cloud-joy-backend.bundekarshlok.workers.dev";
+// Backend URL ab Vercel serverless function
+const BACKEND_URL = "/api/video";
 
 const UrlInputSection = () => {
   const [url, setUrl] = useState("");
@@ -38,7 +39,7 @@ const UrlInputSection = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`${BACKEND_URL}?url=${encodeURIComponent(url)}`);
       const data = await res.json();
 
       if (!data || !data.video) {
@@ -48,11 +49,10 @@ const UrlInputSection = () => {
       }
 
       setIsLoading(false);
-
       toast({ title: "Video Ready", description: "Your Terabox video is ready to play!" });
 
-      // Yahan player me use karo: setVideoUrl(data.video)
       console.log("Video URL:", data.video);
+      // Yahan player me use karo: setVideoUrl(data.video)
 
     } catch (err) {
       setIsLoading(false);
