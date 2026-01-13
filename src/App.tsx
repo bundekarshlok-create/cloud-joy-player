@@ -6,16 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import VideoPlayer from "./VideoPlayer";
-
-function App() {
-  return (
-    <div>
-      <h1>Cloud Joy Player</h1>
-      <VideoPlayer />
-    </div>
-  );
-}
 
 export default App;
 
