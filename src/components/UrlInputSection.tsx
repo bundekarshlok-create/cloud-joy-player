@@ -6,6 +6,12 @@ import { useToast } from "@/hooks/use-toast";
 
 // Step 1: backend fetch function
 const BACKEND_URL = "https://cloud-joy-backend.bundekarshlok.workers.dev";
+const UrlInputSection = ({ backendUrl }: { backendUrl: string }) => {
+  ...
+  // fetch from backendUrl instead of hardcoded Lovable Cloud
+  const response = await fetch(`${backendUrl}?url=${encodeURIComponent(url)}`);
+  ...
+}
 
 const UrlInputSection = () => {
   const [url, setUrl] = useState("");
